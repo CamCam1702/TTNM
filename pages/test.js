@@ -5,56 +5,37 @@ import { faHandPaper } from "@fortawesome/free-solid-svg-icons";
 
 // We'll limit the processing size to 200px.
 const maxVideoSize = 224;
-const LETTERS = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-    "_NOTHING",
-    "_SPACE",
+const LETTER_DATA = [
+    { letter: "A", imageSrc: "Img/A.png" },
+    { letter: "B", imageSrc: "Img/B.png" },
+    { letter: "C", imageSrc: "Img/C.png" },
+    { letter: "D", imageSrc: "Img/D.png" },
+    { letter: "E", imageSrc: "Img/E.png" },
+    { letter: "F", imageSrc: "Img/F.png" },
+    { letter: "G", imageSrc: "Img/G.png" },
+    { letter: "H", imageSrc: "Img/H.png" },
+    { letter: "I", imageSrc: "Img/I.png" },
+    { letter: "J", imageSrc: "Img/J.png" },
+    { letter: "K", imageSrc: "Img/K.png" },
+    { letter: "L", imageSrc: "Img/L.png" },
+    { letter: "M", imageSrc: "Img/M.png" },
+    { letter: "N", imageSrc: "Img/N.png" },
+    { letter: "O", imageSrc: "Img/O.png" },
+    { letter: "P", imageSrc: "Img/P.png" },
+    { letter: "Q", imageSrc: "Img/Q.png" },
+    { letter: "R", imageSrc: "Img/R.png" },
+    { letter: "S", imageSrc: "Img/S.png" },
+    { letter: "T", imageSrc: "Img/T.png" },
+    { letter: "U", imageSrc: "Img/U.png" },
+    { letter: "V", imageSrc: "Img/V.png" },
+    { letter: "W", imageSrc: "Img/W.png" },
+    { letter: "X", imageSrc: "Img/X.png" },
+    { letter: "Y", imageSrc: "Img/Y.png" },
+    { letter: "Z", imageSrc: "Img/Z.png" },
+    { letter: "_NOTHING", imageSrc: "" },
+    { letter: "_SPACE", imageSrc: "/images/sign-space.png" },
 ];
-const THRESHOLD = 5;
 
-const THRESHOLDS = {
-    S: 3,
-    E: 5,
-    A: 5,
-    N: 6,
-    R: 5,
-};
-/**
- * What we're going to render is:
- *
- * 1. A video component so the user can see what's on the camera.
- *
- * 2. A button to generate an image of the video, load OpenCV and
- * process the image.
- *
- * 3. A canvas to allow us to capture the image of the video and
- * show it to the user.
- */
 export default function Page() {
     const videoElement = useRef(null);
     const canvasEl = useRef(null);
@@ -62,17 +43,10 @@ export default function Page() {
     let [letter, setLetter] = useState(null);
     let [loading, setLoading] = useState(true);
     let [fps, setFps] = useState(0);
-    let [sample, setSample] = useState("");
+    let [word, setWord] = useState("Sign the next word");
+    let [showCorrectImage, setShowCorrectImage] = useState(false);
+    let [correctImageSrc, setCorrectImageSrc] = useState("");
 
-
-    const random = () => {
-        const random = Math.floor(Math.random() * 26);
-        return random;
-    }
-    /**
-     * In the onClick event we'll capture a frame within
-     * the video to pass it to our service.
-     */
     async function processImage() {
         if (
             videoElement !== null &&
@@ -81,81 +55,51 @@ export default function Page() {
             videoElement.current !== null
         ) {
             const ctx = canvasEl.current.getContext("2d");
-            console.log("ctx", ctx)
             ctx.drawImage(videoElement.current, 0, 0, maxVideoSize, maxVideoSize);
-            console.log("go here")
-            // Lấy dữ liệu ảnh từ canvas
+
             try {
                 const image = ctx.getImageData(0, 0, maxVideoSize, maxVideoSize);
-                console.log("image", image);
                 const processedImage = await service.imageProcessing(image);
-                
+
                 const ctxOutput = outputCanvasEl.current.getContext("2d");
-                console.log("processedImage: ", processedImage);
                 ctxOutput.putImageData(processedImage.data.payload, 0, 0);
+
                 const prediction = await service.predict(processedImage.data.payload);
-                console.log("prediction: ", prediction);
-                const predictedLetter = prediction.data.payload;
-                const letterValue = LETTERS[predictedLetter];
+                const predictedLetterIndex = prediction.data.payload;
+                const { letter: letterValue, imageSrc } = LETTER_DATA[predictedLetterIndex];
                 setLetter(letterValue);
 
-                if (letterValue === "_SPACE") return
-                if (letterValue === "_NOTHING") return
-                if(letterValue === sample) {
-                    alert("TRUE!");
-                    setSample(LETTERS[random()])
-                }else {
-                    alert("FALSE!");
+                if (letterValue === "_SPACE") {
+                    setWord(word + " ");
+                    setShowCorrectImage(false);
+                } else if (letterValue === "_NOTHING") {
+                    setShowCorrectImage(false);
+                } else {
+                    if (letterValue === word[word.length - 1]) {
+                        setShowCorrectImage(false);
+                    } else {
+                        setShowCorrectImage(true);
+                        const correctSign = LETTER_DATA.find(item => item.letter === word[word.length - 1]);
+                        setCorrectImageSrc(correctSign?.imageSrc || "/images/placeholder.png");
+                    }
+                    setWord(word + letterValue);
                 }
-
             } catch (error) {
                 console.error("Error processing image:", error);
-                alert("Failed to process image. Please try again.");
+                setWord("Error: Unable to process the image");
+                setShowCorrectImage(false);
+                setLetter("_NOTHING");
             }
         }
     }
 
-    /**
-     * In the useEffect hook we'll load the video
-     * element to show what's on camera.
-     */
     useEffect(() => {
-        async function initCamera() {
-            videoElement.current.width = maxVideoSize;
-            videoElement.current.height = maxVideoSize;
-
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    audio: false,
-                    video: {
-                        facingMode: "environment",
-                        width: maxVideoSize,
-                        height: maxVideoSize,
-                    },
-                });
-                videoElement.current.srcObject = stream;
-
-                return new Promise((resolve) => {
-                    videoElement.current.onloadedmetadata = () => {
-                        resolve(videoElement.current);
-                    };
-                });
-            }
-            const errorMessage =
-                "This browser does not support video capture, or this device does not have a camera";
-            alert(errorMessage);
-            return Promise.reject(errorMessage);
-        }
-
         async function load() {
             const videoLoaded = await initCamera();
             await service.load();
             videoLoaded.play();
-            //   setTimeout(processImage, 0);
             setLoading(false);
-
-            setSample("Y")
-            // setSample(LETTERS[random()])
+            setWord("Sign the next word");
             return videoLoaded;
         }
 
@@ -164,10 +108,7 @@ export default function Page() {
 
     return (
         <div style={{ marginTop: "2em" }}>
-            <h1
-                className="text-center text-heading"
-                style={{ marginBottom: "0.5em" }}
-            >
+            <h1 className="text-center text-heading" style={{ marginBottom: "0.5em" }}>
                 <FontAwesomeIcon icon={faHandPaper} />
             </h1>
             {loading && (
@@ -210,10 +151,7 @@ export default function Page() {
                     ></canvas>
                 </div>
 
-                <div
-                    className="row justify-content-center text-center"
-                    style={{ marginTop: "2em" }}
-                >
+                <div className="row justify-content-center text-center" style={{ marginTop: "2em" }}>
                     <div className="col-xs-12">
                         <h5 className="text-letter">Predicted Letter:</h5>
                         <h4
@@ -228,12 +166,9 @@ export default function Page() {
                         </h4>
                     </div>
                 </div>
-                <div
-                    className="row justify-content-center text-center"
-                    style={{ marginTop: "2em" }}
-                >
+                <div className="row justify-content-center text-center" style={{ marginTop: "2em" }}>
                     <div className="col-xs-12">
-                        <h3 className="text-words">Predicted Words:</h3>
+                        <h3 className="text-words">Predicted Word:</h3>
                         <h2
                             className="text-words"
                             style={{
@@ -242,8 +177,14 @@ export default function Page() {
                                 padding: "1em",
                             }}
                         >
-                            {sample}
+                            {word}
                         </h2>
+                        {showCorrectImage && (
+                            <div>
+                                <h5 className="text-words">Correct sign:</h5>
+                                <img src={correctImageSrc} alt="Correct sign" />
+                            </div>
+                        )}
                         <p className="text-fps">FPS: {fps.toFixed(3)}</p>
                     </div>
                 </div>
