@@ -3,9 +3,9 @@ import service from "../services/service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandPaper } from "@fortawesome/free-solid-svg-icons";
 import { Camera, Star, CheckCircle } from 'lucide-react';
-// import Img from "../Img";
+import Img from "../Img";
 // import { default as A } from '../Img/A.png';
-const Img = []
+// const Img = []
 
 // We'll limit the processing size to 200px.
 const maxVideoSize = 224;
@@ -122,6 +122,12 @@ export default function Page() {
     }
   }
 
+  const handleChangeWord = () => {
+      let rand = random();
+      setCurrentImage(Img[rand]);
+      setWordsLearned(LETTERS[rand]);
+  }
+
   /**
    * In the useEffect hook we'll load the video
    * element to show what's on camera.
@@ -154,6 +160,7 @@ export default function Page() {
       return Promise.reject(errorMessage);
     }
 
+
     async function load() {
       const videoLoaded = await initCamera();
       await service.load();
@@ -164,7 +171,7 @@ export default function Page() {
     //   let rand = random();
       let rand = 24;
       setWordsLearned(LETTERS[rand]);
-    setCurrentImage(Img[rand]); 
+      setCurrentImage(Img[rand]); 
       return videoLoaded;
     }
 

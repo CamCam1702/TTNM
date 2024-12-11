@@ -146,6 +146,11 @@ export default function Page() {
     }
   }
 
+
+  const handleSpeech = () => {
+    speechSynthesis.speak(new SpeechSynthesisUtterance(words));
+  }
+
   /**
    * In the useEffect hook we'll load the video
    * element to show what's on camera.
@@ -280,6 +285,7 @@ export default function Page() {
             <div className="flex space-x-2">
               <button 
                 disabled={!words}
+                onClick={() => handleSpeech()}
                 className="bg-blue-100 text-blue-600 p-2 rounded-full hover:bg-blue-200 disabled:opacity-50"
               >
                 <Volume2 size={20} />
