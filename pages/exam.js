@@ -5,7 +5,35 @@ import { faHandPaper } from "@fortawesome/free-solid-svg-icons";
 import { Camera, Star, CheckCircle } from 'lucide-react';
 // import Img from "../Img";
 // import { default as A } from '../Img/A.png';
-const Img = []
+const Img = [
+  "Img/A.png",
+  "Img/B.png",
+  "Img/C.png",
+  "Img/D.png",
+  "Img/E.png",
+  "Img/F.png",
+  "Img/G.png",
+  "Img/H.png",
+  "Img/I.png",
+  "Img/J.png",
+  "Img/K.png",
+  "Img/L.png",
+  "Img/M.png",
+  "Img/N.png",
+  "Img/O.png",
+  "Img/P.png",
+  "Img/Q.png",
+  "Img/R.png",
+  "Img/S.png",
+  "Img/T.png",
+  "Img/U.png",
+  "Img/V.png",
+  "Img/W.png",
+  "Img/X.png",
+  "/Img/Y.png",
+  "Img/Z.png"
+];
+
 
 // We'll limit the processing size to 200px.
 const maxVideoSize = 224;
@@ -114,6 +142,9 @@ export default function Page() {
           setCurrentImage(Img[rand]);
         } else {
           setFeedback('Hãy thử lại. Xem hướng dẫn bên dưới.');
+          // let rand = random();
+          // setWordsLearned(LETTERS[rand]);
+          setCurrentImage(Img[rand]); 
         }
       } catch (error) {
         console.error("Error processing image:", error);
@@ -162,9 +193,9 @@ export default function Page() {
       setLoading(false);
 
     //   let rand = random();
-      let rand = 24;
+      let rand = random();
       setWordsLearned(LETTERS[rand]);
-    setCurrentImage(Img[rand]); 
+      setCurrentImage(Img[rand]); 
       return videoLoaded;
     }
 
@@ -210,11 +241,11 @@ export default function Page() {
             {/* Video/Image Guide Section */}
             <div className="bg-blue-100 rounded-lg p-4 flex items-center justify-center">
               <div className="w-full h-64 bg-blue-200 rounded-md flex items-center justify-center text-blue-600">
-                {/* {currentImage ? */}
-                    {/* <img src={A} alt="" width={maxVideoSize}     height={maxVideoSize} /> */}
-                    {/* : */}
-                    "Ảnh Hướng Dẫn"
-                {/* }  */}
+                {currentImage ? (
+                  <img src={currentImage} alt="" width={maxVideoSize} height={maxVideoSize} />
+                ) : (
+                  "Ảnh Hướng Dẫn"
+                )}
               </div>
             </div>
 
