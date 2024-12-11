@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Camera, Globe, Volume2, RefreshCw } from 'lucide-react';
+import '../styles/globals.css'
 
 const SignLanguageTranslationApp = () => {
   const [isTranslating, setIsTranslating] = useState(false);

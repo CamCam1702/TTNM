@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Camera, Star, CheckCircle } from 'lucide-react';
+import '../styles/globals.css'
 
 const SignLanguageLearningApp = () => {
   const [currentWord, setCurrentWord] = useState('Hello');
