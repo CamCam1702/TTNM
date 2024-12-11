@@ -1,0 +1,30 @@
+import { default as A } from './A.png';
+import { default as B } from './B.png';
+import { default as C } from './C.png';
+import { default as D } from './D.png';
+import { default as E } from './E.png';
+import { default as F } from './F.png';
+import { default as G } from './G.png';
+import { default as H } from './H.png';
+import { default as I } from './I.png';
+import { default as J } from './J.png';
+import { default as K } from './K.png';
+import { default as L } from './L.png';
+import { default as M } from './M.png';
+import { default as N } from './N.png';
+import { default as O } from './O.png';
+import { default as P } from './P.png';
+import { default as Q } from './Q.png';
+import { default as R } from './R.png';
+import { default as S } from './S.png';
+import { default as T } from './T.png';
+import { default as U } from './U.png';
+import { default as V } from './V.png';
+import { default as W } from './W.png';
+import { default as X } from './X.png';
+import { default as Y } from './Y.png';
+import { default as Z } from './Z.png';
+
+const Img = [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z];
+
+export default Img;

@@ -1,0 +1,251 @@
+/* Layout and Background */
+.bg-gradient-to-br {
+    background: linear-gradient(to bottom right, #ebf8ff, #cfe0f3);
+  }
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  .flex {
+    display: flex;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .p-4 {
+    padding: 1rem;
+  }
+  
+  /* Card */
+  .bg-white {
+    background-color: #ffffff;
+  }
+  .rounded-xl {
+    border-radius: 1rem;
+  }
+  .shadow-2xl {
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  .w-full {
+    width: 100%;
+  }
+  .max-w-3xl {
+    max-width: 48rem;
+  }
+  .p-6 {
+    padding: 1.5rem;
+  }
+  
+  /* Header */
+  .flex {
+    display: flex;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .mb-6 {
+    margin-bottom: 1.5rem;
+  }
+  .text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  .font-bold {
+    font-weight: 700;
+  }
+  .text-blue-600 {
+    color: #2563eb;
+  }
+  .space-x-2 {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .bg-blue-100 {
+    background-color: #dbeafe;
+  }
+  .p-2 {
+    padding: 0.5rem;
+  }
+  .rounded-full {
+    border-radius: 9999px;
+  }
+  .hover\:bg-blue-200:hover {
+    background-color: #bfdbfe;
+  }
+  .px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Main Translation Area */
+  .grid {
+    display: grid;
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .gap-6 {
+    gap: 1.5rem;
+  }
+  
+  /* Camera Section */
+  .bg-gray-100 {
+    background-color: #f3f4f6;
+  }
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  .p-4 {
+    padding: 1rem;
+  }
+  .bg-gray-200 {
+    background-color: #e5e7eb;
+  }
+  .h-80 {
+    height: 20rem;
+  }
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  .relative {
+    position: relative;
+  }
+  .text-gray-500 {
+    color: #6b7280;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .w-16 {
+    width: 4rem;
+  }
+  .h-16 {
+    height: 4rem;
+  }
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Status Indicator */
+  .absolute {
+    position: absolute;
+  }
+  .top-2 {
+    top: 0.5rem;
+  }
+  .right-2 {
+    right: 0.5rem;
+  }
+  .w-3 {
+    width: 0.75rem;
+  }
+  .h-3 {
+    height: 0.75rem;
+  }
+  .bg-green-500 {
+    background-color: #10b981;
+  }
+  .bg-red-500 {
+    background-color: #ef4444;
+  }
+  
+  /* Translation Button */
+  .w-full {
+    width: 100%;
+  }
+  .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  .text-white {
+    color: #ffffff;
+  }
+  .transition-colors {
+    transition-property: color, background-color;
+    transition-duration: 0.2s;
+  }
+  .bg-red-500 {
+    background-color: #ef4444;
+  }
+  .hover\:bg-red-600:hover {
+    background-color: #dc2626;
+  }
+  .bg-blue-500 {
+    background-color: #3b82f6;
+  }
+  .hover\:bg-blue-600:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Result Section */
+  .bg-blue-50 {
+    background-color: #eff6ff;
+  }
+  .shadow-inner {
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.06);
+  }
+  .text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  .text-blue-700 {
+    color: #1d4ed8;
+  }
+  .disabled\:opacity-50:disabled {
+    opacity: 0.5;
+  }
+  
+  /* Privacy Notice */
+  .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  .text-gray-500 {
+    color: #6b7280;
+  }
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  
+  .text-yellow-400 {
+    color: #f59e0b; /* Màu vàng */
+  }
+  
+  .font-bold {
+    font-weight: bold;
+  }
+  
+  .text-lg {
+    font-size: 1.125rem; /* Kích thước chữ lớn */
+  }
+  
+  .text-green-500 {
+    color: #10b981; /* Màu xanh lá */
+  }
+  
+  .bg-green-100 {
+    background-color: #d1fae5; /* Màu nền xanh lá sáng */
+  }
+  
+  .text-green-800 {
+    color: #064e3b; /* Màu chữ xanh lá đậm */
+  }
+  
+  .bg-red-100 {
+    background-color: #fee2e2; /* Màu nền đỏ sáng */
+  }
+  
+  .text-red-800 {
+    color: #7f1d1d; /* Màu chữ đỏ đậm */
+  }
+  
