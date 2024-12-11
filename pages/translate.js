@@ -3,7 +3,6 @@ import service from '../services/service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import { Camera, Globe, Volume2, RefreshCw } from 'lucide-react';
-// We'll limit the processing size to 200px.
 const maxVideoSize = 224;
 const LETTERS = [
   'A',
@@ -69,6 +68,9 @@ export default function Page() {
    * In the onClick event we'll capture a frame within
    * the video to pass it to our service.
    */
+  const handleSpeech = () => {
+    speechSynthesis.speak(new SpeechSynthesisUtterance(words));
+  }
   async function processImage() {
     if (
       videoElement !== null &&
@@ -100,7 +102,7 @@ export default function Page() {
 
       videoElement.current.addEventListener('ended', () => processWord());
 
-      while (isTranslating) {
+      while (isTranslating && canvasEl.current) {
         const ctx = canvasEl.current.getContext('2d');
         ctx.drawImage(videoElement.current, 0, 0, maxVideoSize, maxVideoSize);
         const image = ctx.getImageData(0, 0, maxVideoSize, maxVideoSize);
@@ -146,17 +148,15 @@ export default function Page() {
     }
   }
 
-
-  const handleSpeech = () => {
-    speechSynthesis.speak(new SpeechSynthesisUtterance(words));
-  }
-
   /**
    * In the useEffect hook we'll load the video
    * element to show what's on camera.
    */
   useEffect(() => {
     async function initCamera() {
+      if(videoElement.current == null){
+        return;
+      }
       videoElement.current.width = maxVideoSize;
       videoElement.current.height = maxVideoSize;
 
@@ -185,6 +185,9 @@ export default function Page() {
 
     async function load() {
       const videoLoaded = await initCamera();
+      if(videoLoaded == null){
+        return;
+      }
       await service.load();
       videoLoaded.play();
       setTimeout(processImage, 0);
@@ -192,7 +195,9 @@ export default function Page() {
       return videoLoaded;
     }
 
-    load();
+    if (isTranslating){
+      load();
+    }
   }, [isTranslating]);
 
   return (
@@ -288,7 +293,8 @@ export default function Page() {
                 onClick={() => handleSpeech()}
                 className="bg-blue-100 text-blue-600 p-2 rounded-full hover:bg-blue-200 disabled:opacity-50"
               >
-                <Volume2 size={20} />
+                <Volume2 size={20}
+                />
               </button>
               <button 
                 onClick={() => setWords('')}
