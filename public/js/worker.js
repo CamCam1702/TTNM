@@ -5,10 +5,6 @@ function predict({ msg, payload }) {
     .div(tf.scalar(127.5))
     .sub(tf.scalar(1))
     .expandDims();
-  // const tensor = tf.browser
-  //   .fromPixels(payload)
-  //   .sub(tf.tensor1d([103.939, 116.779, 123.68]))
-  //   .expandDims();
   const prediction = model.predict(tensor);
   const predictedLetter = prediction.argMax(1).dataSync();
   const confidence = prediction.dataSync()[0];
@@ -18,11 +14,6 @@ function predict({ msg, payload }) {
   tf.engine().endScope();
 }
 
-/**
- * With OpenCV we have to work the images as cv.Mat (matrices),
- * so the first thing we have to do is to transform the
- * ImageData to a type that openCV can recognize.
- */
 function imageProcessing({ msg, payload }) {
   const img = cv.matFromImageData(payload);
   let result = new cv.Mat();
