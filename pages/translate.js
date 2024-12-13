@@ -43,17 +43,6 @@ const THRESHOLDS = {
   N: 6,
   R: 5,
 };
-/**
- * What we're going to render is:
- *
- * 1. A video component so the user can see what's on the camera.
- *
- * 2. A button to generate an image of the video, load OpenCV and
- * process the image.
- *
- * 3. A canvas to allow us to capture the image of the video and
- * show it to the user.
- */
 export default function Page() {
   const videoElement = useRef(null);
   const canvasEl = useRef(null);
@@ -64,10 +53,6 @@ export default function Page() {
   let [words, setWords] = useState('');
   const [isTranslating, setIsTranslating] = useState(false);
   const [translatedText, setTranslatedText] = useState('');
-  /**
-   * In the onClick event we'll capture a frame within
-   * the video to pass it to our service.
-   */
   const handleSpeech = () => {
     speechSynthesis.speak(new SpeechSynthesisUtterance(words));
   }
@@ -148,10 +133,6 @@ export default function Page() {
     }
   }
 
-  /**
-   * In the useEffect hook we'll load the video
-   * element to show what's on camera.
-   */
   useEffect(() => {
     async function initCamera() {
       if(videoElement.current == null){

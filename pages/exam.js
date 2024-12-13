@@ -30,7 +30,7 @@ const Img = [
   "Img/V.png",
   "Img/W.png",
   "Img/X.png",
-  "/Img/Y.png",
+  "Img/Y.png",
   "Img/Z.png"
 ];
 
@@ -118,9 +118,9 @@ export default function Page() {
 
         if (letterValue === "_SPACE") return;
         if (letterValue === "_NOTHING") return;
+        let rand = random();
         if (letterValue === wordsLearned) {
           setScore((prev) => prev + 10);
-          let rand = random();
           setRandomValue(rand);
           setFeedback('Chính xác! Tuyệt vời!');
           setWordsLearned(LETTERS[rand]);
@@ -142,7 +142,8 @@ export default function Page() {
       let rand = random();
       setRandomValue(rand); 
       setWordsLearned(LETTERS[rand]);
-      setCurrentImage(null)
+      setCurrentImage(null);
+      setFeedback(null);
   }
   useEffect(() => {
     async function initCamera() {

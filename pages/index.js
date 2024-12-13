@@ -3,7 +3,6 @@ import service from '../services/service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPaper } from '@fortawesome/free-solid-svg-icons';
 
-// We'll limit the processing size to 200px.
 const maxVideoSize = 224;
 const LETTERS = [
   'A',
@@ -44,17 +43,6 @@ const THRESHOLDS = {
   N: 6,
   R: 5,
 };
-/**
- * What we're going to render is:
- *
- * 1. A video component so the user can see what's on the camera.
- *
- * 2. A button to generate an image of the video, load OpenCV and
- * process the image.
- *
- * 3. A canvas to allow us to capture the image of the video and
- * show it to the user.
- */
 export default function Page() {
   const videoElement = useRef(null);
   const canvasEl = useRef(null);
